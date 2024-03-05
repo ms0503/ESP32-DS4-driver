@@ -1,7 +1,7 @@
 # DualShock4 Input UART Transmitter on ESP32
 - [English](README.md)
 
-ESP32-DS4はDualShock4から信号を受け取り、32・33番ピンからUARTで出力するプログラムです。
+ESP32-DS4はDualShock4から信号を受け取り、33番ピンからUARTで出力するプログラムです。
 
 # UARTパケット仕様
 | ボーレート | データ長 | パリティ | ストップビット |

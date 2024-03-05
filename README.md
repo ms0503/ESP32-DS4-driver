@@ -1,7 +1,7 @@
 # DualShock4 Input UART Transmitter on ESP32
 - [日本語](README.ja.md)
 
-ESP32-DS4 is a program, which receive DualShock4 signal and send UART signal on 32 and 33 pin.
+ESP32-DS4 is a program, which receive DualShock4 signal and transmit UART signal on 33 pin.
 
 # UART Packet Specification
 | Baud rate | Data length | Parity | Stop bits |
