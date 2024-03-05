@@ -1,0 +1,8 @@
+[package]
+authors = ["Sora Tonami <ms0503@outlook.com>"]
+edition = "2021"
+license = "MIT"
+name = "esp32-ds4-driver"
+readme = "https://github.com/ms0503/ESP32-DS4-driver#readme"
+repository = "https://github.com/ms0503/ESP32-DS4-driver"
+version = "0.1.0"
