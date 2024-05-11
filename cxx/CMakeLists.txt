@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(esp32-ds4-driver CXX)
 add_library(esp32-ds4 STATIC)
-target_compile_features(esp32-ds4 PUBLIC cxx_std_23)
+target_compile_features(esp32-ds4 PUBLIC cxx_std_14)
 target_compile_options(esp32-ds4 PUBLIC -Wall)
 target_include_directories(esp32-ds4 PUBLIC include)
 add_subdirectory(src)
