@@ -1,0 +1,42 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools"
+]
+
+[project]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Software Development :: Embedded Systems",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed"
+]
+description = "A driver for ESP32-DS4"
+license = { file = "../LICENSE.md" }
+name = "esp32ds4"
+readme = { content-type = "text/markdown", file = "../README.md" }
+requires-python = ">=3.6"
+version = "0.1.0"
+
+[[project.authors]]
+email = "ms0503@outlook.com"
+name = "Sora Tonami"
+
+[tool.setuptools]
+py-modules = [
+    "src/esp32ds4"
+]

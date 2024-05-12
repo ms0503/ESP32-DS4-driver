@@ -8,6 +8,10 @@ ESP32-DS4-driverは[ESP32-DS4](https://github.com/ms0503/ESP32-DS4)向けのド�
 - C++14をサポートするC++コンパイラ
 - CMake 3.1以降
 
+## Python 3
+- Python 3.6以降
+- pip
+
 ## Rust
 - Cargo
 - `core`クレート
@@ -17,6 +21,10 @@ ESP32-DS4-driverは[ESP32-DS4](https://github.com/ms0503/ESP32-DS4)向けのド�
 1. クローンする。
 2. `CMakeLists.txt`へサブディレクトリ`cxx`を追加する。
 3. ビルドターゲットへ`esp32-ds4`をリンクさせる。
+
+## Python 3
+1. クローンする。
+2. 開発環境で`pip install <リポジトリへのパス>/py`を実行する。
 
 ## Rust
 1. クローンする。
