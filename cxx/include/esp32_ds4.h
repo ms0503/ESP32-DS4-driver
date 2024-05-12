@@ -79,6 +79,8 @@ namespace ESP32DS4 {
 
     class Packet {
     public:
+        const bool isValid;
+
         explicit Packet(std::uint8_t (&raw)[LENGTH]);
 
         ~Packet();

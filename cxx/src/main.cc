@@ -4,6 +4,7 @@
 
 namespace ESP32DS4 {
     Packet::Packet(std::uint8_t (&raw)[LENGTH]):
+        isValid(validate(raw)),
         raw(raw) {
     }
 
