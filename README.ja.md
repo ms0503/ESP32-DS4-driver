@@ -6,7 +6,7 @@ ESP32-DS4-driverは[ESP32-DS4](https://github.com/ms0503/ESP32-DS4)向けのド�
 # 必要物
 ## C++
 - C++14をサポートするC++コンパイラ
-- CMake 3.1以降
+- CMake 3.5以降
 
 ## Python 3
 - Python 3.6以降

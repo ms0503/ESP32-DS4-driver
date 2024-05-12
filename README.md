@@ -6,7 +6,7 @@ ESP32-DS4-driver is a driver for [ESP32-DS4](https://github.com/ms0503/ESP32-DS4
 # Dependencies
 ## On C++
 - Any C++ compiler with C++14 support
-- CMake 3.1 or later
+- CMake 3.5 or later
 
 ## On Python 3
 - Python 3.6 or later
