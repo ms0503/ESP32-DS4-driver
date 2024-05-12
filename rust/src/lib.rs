@@ -146,7 +146,13 @@ impl<'a> Packet<'a> {
     }
 
     fn validate(raw: &[u8; 10]) -> bool {
-        Self::get_checksum(raw) == raw[Byte::Checksum as usize]
+        if HEADER != raw[Byte::Header as usize] {
+            return false;
+        }
+        if Self::get_checksum(raw) != raw[Byte::Checksum as usize] {
+            return false;
+        }
+        true
     }
 
     fn get_checksum(raw: &[u8; 10]) -> u8 {

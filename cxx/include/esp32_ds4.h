@@ -95,7 +95,13 @@ namespace ESP32DS4 {
         std::uint8_t (&raw)[LENGTH];
 
         static bool validate(std::uint8_t (&raw)[LENGTH]) noexcept {
-            return get_checksum(raw) == raw[static_cast<std::size_t>(Byte::Checksum)];
+            if(HEADER != raw[static_cast<std::size_t>(Byte::Header)]) {
+                return false;
+            }
+            if(get_checksum(raw) != raw[static_cast<std::size_t>(Byte::Checksum)]) {
+                return false;
+            }
+            return true;
         }
 
         static std::uint8_t get_checksum(std::uint8_t (&raw)[LENGTH]) noexcept {
