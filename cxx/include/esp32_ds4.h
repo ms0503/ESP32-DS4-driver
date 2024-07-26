@@ -1,46 +1,53 @@
+/**
+ * @file esp32_ds4.h
+ * @brief ESP32-DS4-driver
+ */
+
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
 
 namespace ESP32DS4 {
-    /// Header byte.
+    //! @brief Header byte.
     constexpr std::uint8_t HEADER = 0x80;
-    /// Data byte length.
+    //! @brief Data byte length.
     constexpr std::size_t LENGTH = 10;
 
-    /// Button bits.
+    /**
+     * @brief Button bits.
+     */
     enum class Button : std::uint16_t {
-        /// Circle button.
+        //! @brief Circle button.
         Circle = 0b0000'0000'0000'0001,
-        /// Triangle button.
+        //! @brief Triangle button.
         Triangle = 0b0000'0000'0000'0010,
-        /// Square button.
+        //! @brief Square button.
         Square = 0b0000'0000'0000'0100,
-        /// Cross button.
+        //! @brief Cross button.
         Cross = 0b0000'0000'0000'1000,
-        /// D-pad right button.
+        //! @brief D-pad right button.
         Right = 0b0000'0000'0001'0000,
-        /// D-pad up button.
+        //! @brief D-pad up button.
         Up = 0b0000'0000'0010'0000,
-        /// D-pad left button.
+        //! @brief D-pad left button.
         Left = 0b0000'0000'0100'0000,
-        /// D-pad down button.
+        //! @brief D-pad down button.
         Down = 0b0000'0000'1000'0000,
-        /// Right bumper button.
+        //! @brief Right bumper button.
         R1 = 0b0000'0001'0000'0000,
-        /// Left bumper button.
+        //! @brief Left bumper button.
         L1 = 0b0000'0010'0000'0000,
-        /// Right stick button.
+        //! @brief Right stick button.
         R3 = 0b0000'0100'0000'0000,
-        /// Left stick button.
+        //! @brief Left stick button.
         L3 = 0b0000'1000'0000'0000,
-        /// Center-right button.
+        //! @brief Center-right button.
         Options = 0b0001'0000'0000'0000,
-        /// Center-left button.
+        //! @brief Center-left button.
         Share = 0b0010'0000'0000'0000,
-        /// Logo button.
+        //! @brief Logo button.
         PSLogo = 0b0100'0000'0000'0000,
-        /// Touchpad button.
+        //! @brief Touchpad button.
         Touchpad = 0b1000'0000'0000'0000
     };
 
@@ -57,26 +64,33 @@ namespace ESP32DS4 {
         Checksum
     };
 
-    /// Analog sticks.
+    /**
+     * @brief Analog sticks.
+     */
     struct Sticks {
-        /// X-coordinate of right stick.
+        //! @brief X-coordinate of right stick.
         std::int8_t rx;
-        /// Y-coordinate of right stick.
+        //! @brief Y-coordinate of right stick.
         std::int8_t ry;
-        /// X-coordinate of left stick.
+        //! @brief X-coordinate of left stick.
         std::int8_t lx;
-        /// Y-coordinate of left stick.
+        //! @brief Y-coordinate of left stick.
         std::int8_t ly;
     };
 
-    /// Trigger buttons.
+    /**
+     * @brief Trigger buttons.
+     */
     struct Triggers {
-        /// Right trigger button.
+        //! @brief Right trigger button.
         std::uint8_t r2;
-        /// Left trigger button.
+        //! @brief Left trigger button.
         std::uint8_t l2;
     };
 
+    /**
+     * @brief Packet data.
+     */
     class Packet {
     public:
         const bool isValid;
@@ -85,10 +99,24 @@ namespace ESP32DS4 {
 
         ~Packet();
 
+        /**
+         * @brief Gets a bit of specified button.
+         * @param [in] t Button type.
+         * @retval true if a bit is high.
+         * @retval false otherwise.
+         */
         bool get_bit(Button t) const noexcept;
 
+        /**
+         * @brief Gets sticks data.
+         * @returns A sticks data.
+         */
         Sticks get_sticks() const noexcept;
 
+        /**
+         * @brief Gets triggers data.
+         * @returns A triggers data.
+         */
         Triggers get_triggers() const noexcept;
 
     private:

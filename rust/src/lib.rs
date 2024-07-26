@@ -1,3 +1,6 @@
+//! ESP32-DS4-driver
+
+#![allow(dead_code)]
 #![feature(error_in_core)]
 #![no_std]
 
@@ -47,7 +50,6 @@ pub enum Button {
     Touchpad = 0b1000_0000_0000_0000,
 }
 
-#[allow(dead_code)]
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[repr(usize)]
 enum Byte {
@@ -85,6 +87,7 @@ pub struct Triggers {
     pub l2: u8,
 }
 
+/// Packet validation error.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct ValidationError;
 
@@ -100,13 +103,20 @@ impl Error for ValidationError {
     }
 }
 
+/// Packet data.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Packet<'a> {
     raw: &'a [u8; LENGTH],
 }
 
 impl<'a> Packet<'a> {
-    /// Creates instance with raw data.
+    /// Creates an instance with raw data.
+    ///
+    /// # Arguments
+    /// * `raw` - Raw packet data.
+    ///
+    /// # Returns
+    /// An instance of Packet.
     ///
     /// # Errors
     /// This may return [ValidationError] whether raw data is invalid.
@@ -119,6 +129,12 @@ impl<'a> Packet<'a> {
     }
 
     /// Gets a bit of specified button.
+    ///
+    /// # Arguments
+    /// * `t` - Button type.
+    ///
+    /// # Returns
+    /// true if a bit is high, otherwise false.
     pub fn get_bit(&self, t: Button) -> bool {
         if 0xff < t as u16 {
             (self.raw[Byte::BtnHigh as usize] & (t as u16 >> 8) as u8) != 0
@@ -128,6 +144,9 @@ impl<'a> Packet<'a> {
     }
 
     /// Gets sticks data.
+    ///
+    /// # Returns
+    /// A sticks data.
     pub fn get_sticks(&self) -> Sticks {
         Sticks {
             rx: self.raw[Byte::StickRX as usize] as i8,
@@ -138,6 +157,9 @@ impl<'a> Packet<'a> {
     }
 
     /// Gets triggers data.
+    ///
+    /// # Returns
+    /// A triggers data.
     pub fn get_triggers(&self) -> Triggers {
         Triggers {
             r2: self.raw[Byte::R2 as usize],
