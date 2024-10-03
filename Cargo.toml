@@ -1,0 +1,8 @@
+[workspace]
+default-members = [
+    "rust"
+]
+members = [
+    "rust"
+]
+resolver = "2"
