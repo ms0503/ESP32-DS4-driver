@@ -1,7 +1,6 @@
 //! ESP32-DS4-driver
 
 #![allow(dead_code)]
-#![feature(error_in_core)]
 #![no_std]
 
 use core::error::Error;
@@ -47,7 +46,7 @@ pub enum Button {
     /// Logo button.
     PSLogo = 0b0100_0000_0000_0000,
     /// Touchpad button.
-    Touchpad = 0b1000_0000_0000_0000,
+    Touchpad = 0b1000_0000_0000_0000
 }
 
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -62,7 +61,7 @@ enum Byte {
     StickLY,
     R2,
     L2,
-    Checksum,
+    Checksum
 }
 
 /// Analog sticks.
@@ -75,7 +74,7 @@ pub struct Sticks {
     /// X coordinate of left stick.
     pub lx: i8,
     /// Y coordinate of left stick.
-    pub ly: i8,
+    pub ly: i8
 }
 
 /// Trigger buttons.
@@ -84,7 +83,7 @@ pub struct Triggers {
     /// Right trigger button.
     pub r2: u8,
     /// Left trigger button.
-    pub l2: u8,
+    pub l2: u8
 }
 
 /// Packet validation error.
@@ -105,11 +104,11 @@ impl Error for ValidationError {
 
 /// Packet data.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct Packet<'a> {
-    raw: &'a [u8; LENGTH],
+pub struct Packet {
+    raw: [u8; LENGTH]
 }
 
-impl<'a> Packet<'a> {
+impl Packet {
     /// Creates an instance with raw data.
     ///
     /// # Arguments
@@ -120,8 +119,8 @@ impl<'a> Packet<'a> {
     ///
     /// # Errors
     /// This may return [ValidationError] whether raw data is invalid.
-    pub fn from(raw: &'a [u8; LENGTH]) -> Result<Self, ValidationError> {
-        if Self::validate(raw) {
+    pub fn from(raw: [u8; LENGTH]) -> Result<Self, ValidationError> {
+        if Self::validate(&raw) {
             Ok(Self { raw })
         } else {
             Err(ValidationError)
@@ -152,7 +151,7 @@ impl<'a> Packet<'a> {
             rx: self.raw[Byte::StickRX as usize] as i8,
             ry: self.raw[Byte::StickRY as usize] as i8,
             lx: self.raw[Byte::StickLX as usize] as i8,
-            ly: self.raw[Byte::StickLY as usize] as i8,
+            ly: self.raw[Byte::StickLY as usize] as i8
         }
     }
 
@@ -163,7 +162,7 @@ impl<'a> Packet<'a> {
     pub fn get_triggers(&self) -> Triggers {
         Triggers {
             r2: self.raw[Byte::R2 as usize],
-            l2: self.raw[Byte::L2 as usize],
+            l2: self.raw[Byte::L2 as usize]
         }
     }
 
