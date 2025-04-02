@@ -49,6 +49,24 @@ pub enum Button {
     Touchpad = 0b1000_0000_0000_0000
 }
 
+/// Stick axis identifier.
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
+pub enum StickAxis {
+    RX,
+    RY,
+    LX,
+    LY
+}
+
+/// Trigger identifier.
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
+pub enum Trigger {
+    R2,
+    L2
+}
+
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[repr(usize)]
 enum Byte {
@@ -62,6 +80,26 @@ enum Byte {
     R2,
     L2,
     Checksum
+}
+
+impl From<StickAxis> for Byte {
+    fn from(value: StickAxis) -> Self {
+        match value {
+            StickAxis::RX => Byte::StickRX,
+            StickAxis::RY => Byte::StickRY,
+            StickAxis::LX => Byte::StickLX,
+            StickAxis::LY => Byte::StickLY
+        }
+    }
+}
+
+impl From<Trigger> for Byte {
+    fn from(value: Trigger) -> Self {
+        match value {
+            Trigger::R2 => Byte::R2,
+            Trigger::L2 => Byte::L2
+        }
+    }
 }
 
 /// Analog sticks.
@@ -121,7 +159,9 @@ impl Packet {
     /// This may return [ValidationError] whether raw data is invalid.
     pub fn from(raw: [u8; LENGTH]) -> Result<Self, ValidationError> {
         if Self::validate(&raw) {
-            Ok(Self { raw })
+            Ok(Self {
+                raw
+            })
         } else {
             Err(ValidationError)
         }
@@ -155,6 +195,14 @@ impl Packet {
         }
     }
 
+    /// Gets stick axis value.
+    ///
+    /// # Returns
+    /// A value of specified stick axis.
+    pub fn get_stick_axis(&self, axis: StickAxis) -> i8 {
+        self.raw[Byte::from(axis) as usize] as i8
+    }
+
     /// Gets triggers data.
     ///
     /// # Returns
@@ -164,6 +212,14 @@ impl Packet {
             r2: self.raw[Byte::R2 as usize],
             l2: self.raw[Byte::L2 as usize]
         }
+    }
+
+    /// Gets trigger value.
+    ///
+    /// # Returns
+    /// A value of specified trigger.
+    pub fn get_trigger(&self, trigger: Trigger) -> u8 {
+        self.raw[Byte::from(trigger) as usize]
     }
 
     fn validate(raw: &[u8; 10]) -> bool {
