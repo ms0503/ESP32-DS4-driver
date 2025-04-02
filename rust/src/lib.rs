@@ -6,6 +6,9 @@
 use core::error::Error;
 use core::fmt::Display;
 
+#[cfg(test)]
+mod test;
+
 /// Header byte.
 pub const HEADER: u8 = 0x80;
 /// Data byte length.
@@ -222,7 +225,7 @@ impl Packet {
         self.raw[Byte::from(trigger) as usize]
     }
 
-    fn validate(raw: &[u8; 10]) -> bool {
+    fn validate(raw: &[u8; LENGTH]) -> bool {
         if HEADER != raw[Byte::Header as usize] {
             return false;
         }
@@ -232,7 +235,7 @@ impl Packet {
         true
     }
 
-    fn get_checksum(raw: &[u8; 10]) -> u8 {
+    pub(crate) fn get_checksum(raw: &[u8; LENGTH]) -> u8 {
         let mut acc = 0u8;
         for n in raw[0..LENGTH - 1].iter() {
             acc = acc.wrapping_add(*n);
